@@ -36,3 +36,9 @@ button,
     color: white !important;
     font-weight: bold;
 }
+
+/* style for populated list from local storage */
+.li {
+    border-bottom: rgb(4, 68, 4);
+    list-style-type: none;
+}
