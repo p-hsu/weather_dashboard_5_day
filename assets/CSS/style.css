@@ -1,0 +1,38 @@
+body {
+    background-color: lightgrey;
+}
+
+header {
+    background-color: rgb(4, 68, 4);
+    color: white;
+    text-align: center;
+}
+
+.card {
+    border-color:rgb(4, 68, 4);
+}
+
+.card-body {
+    background-color: lightgrey;;
+}
+
+.card-header {
+    background-color:rgb(4, 68, 4);
+    color: white;
+}
+
+button,
+.btn.btn-default {
+    background-color: rgb(4, 68, 4);
+    color: white;
+}
+
+/* over-ride bootstrap defaults */
+.btn.btn-defaut:hover,
+.btn.btn-default:active,
+.btn.btn-default.active,
+.btn.btn-default:focus,
+.btn.btn-default:hover {
+    color: white !important;
+    font-weight: bold;
+}

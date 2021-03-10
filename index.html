@@ -11,26 +11,26 @@
 </head>
 <body>
     <!-- jumbotron  -->
-    <header class="jumbotron >
+    <header class="container-fluid mb-3 pb-2">
         <h1 class="display-3">Weather Dashboard</h1>
         <p class="lead">A 5 day projection weather app to help with planning your week!</p>
     </header>
     <div class="container">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div class="card">
                 <!-- search area -->
                 <div class="card-header">What's the weather like in...?</div>
                 <div class="card-body">
-                    <input type="text" class="form-fontrol" placeholder="Enter location by name">
-                    <button class="btn srcBtn" type="button">Search here!</button>
-                    <h6 class="card-text">Recent searches:</h6>
+                    <input type="text" class="form-control p-1 m-1" placeholder="Enter location by name">
+                    <button class="btn btn-default m-1" aria-pressed="true" type="button">Search!</button>
+                    <p class="card-text">Recent searches:</p>
                     <!-- ul Element for .getItem of past searches -->
                     <ul class="history"></ul>
                 </div>
                 </div>
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-8">
                 <div class="card">
                 <div class="card-header">The current weather for: </div>
                 <div class="card-body">
