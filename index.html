@@ -14,6 +14,7 @@
     <header class="container-fluid mb-3 pb-2">
         <h1 class="display-3">Weather Dashboard</h1>
         <p class="lead">A 5 day projection weather app to help with planning your week!</p>
+        <p class="date"></p>
     </header>
     <div class="container">
         <div class="row">
@@ -22,18 +23,18 @@
                 <!-- search area -->
                 <div class="card-header">What's the weather like in...?</div>
                 <div class="card-body">
-                    <input type="text" class="form-control p-1 m-1" placeholder="Enter location by name">
+                    <input type="text" class="form-control p-1 m-1 userInput" placeholder="Enter full city name">
                     <button class="btn btn-default m-1" aria-pressed="true" type="button">Search!</button>
-                    <p class="card-text">Recent searches:</p>
+                    <p class="card-text">Recent cities searched:</p>
                     <!-- ul Element for .getItem of past searches -->
-                    <ul class="history"></ul>
+                    <ul class="list-group list-group-flush history"></ul>
                 </div>
                 </div>
             </div>
             <div class="col-sm-8">
                 <div class="card">
-                <div class="card-header">The current weather for: </div>
-                <div class="card-body">
+                <div class="card-header currentHeader">The current weather for: <span class="currentSpan"></span></div>
+                <div class="card-body currentDay">
                 <!-- empty div for currnt day searched location weather display -->
                 </div>
                 </div>
@@ -43,8 +44,8 @@
 
     <div class="container">
         <div class="card mt-4">
-            <div class="card-header">Your 5 day weather projection:</div>
-            <div class="card-body">
+            <div class="card-header fiveHeader">The 5 day weather projection for: <span class="fiveSpan"></span> </div>
+            <div class="card-body fiveDay">
             <!-- empty div for 5 day weather projection display -->
             </div>
         </div>
@@ -53,6 +54,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="assets/JavaScript/script.js"></script>
+    <script src="./assets/JavaScript/script.js"></script>
 </body>
 </html>

@@ -39,6 +39,5 @@ button,
 
 /* style for populated list from local storage */
 .li {
-    border-bottom: rgb(4, 68, 4);
-    list-style-type: none;
+    border-color: rgb(4, 68, 4);
 }
