@@ -4,28 +4,125 @@ var fiveContainer = $(".fiveDay")
 var histList = $(".history")
 var srcBtn = $(".btnSrc")
 var clrBtn = $(".btnClr")
-
-// display date with moment.js
-var today = moment().format("dddd, MMMM Do YYYY");
-$(".date").text("Today is " + today);
-
 // .getItem variable for stored data
 var srcHistory = JSON.parse(localStorage.getItem("citiesSearched")) || [];
+
+var apiKey = "ba2ad27df96d6b9fb43343bf0585c826";
+
+// display time with moment.js
+var renderTime = function() {
+    var time = moment().format("HH:mm:ss");
+    $(".time").text("Your local time is " + time);
+}
+renderTime();
+setInterval(renderTime, 1000);
+
 
 // event listener for search btn
 srcBtn.click(function(e) {
     e.preventDefault;
     var newCity = $(".userInput").val();
-    if (newCity == "" || newCity == null) {
-        alert("No city to search!");
-        console.log("Empty input");
-    }else {
+    if (newCity) {
         srcHistory.push(newCity);
         // .setItem into data storage
         localStorage.setItem("citiesSearched", JSON.stringify(srcHistory));
         renderSrcHistory();
+        getWeather(newCity);
+    }else {
+        alert("No city to search!");
+        console.log("Empty input");
     };
 })
+
+// currrent weather API fetch
+var getWeather = function (newCity) {
+    var apiURL ="https://api.openweathermap.org/data/2.5/weather?q=" + newCity + "&appid=" + apiKey + "&units=imperial";
+
+    fetch(apiURL)
+    .then(function (response) {
+        if (response.ok) {
+            response.json().then(function (data) {
+                console.log(data);
+                // create Date from UNIX data.dt
+                var apiDate = new Date(data.dt*1000);
+                console.log(apiDate);
+                var today = apiDate.toLocaleDateString("en-US");
+                console.log(today);
+                // header element for name, date, icon
+                var cityName = $("<h3/>")
+                    .text(data.name + ": " + today);
+                currentContainer.append(cityName);
+                // img element for weather icon
+                var weatherIcon = $("<img/>")
+                    .attr("src", "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png")
+                    .attr("alt", data.weather[0].despcription);
+                    cityName.append(weatherIcon);
+                // p element for city time
+                var apiTime = apiDate.toLocaleTimeString("en-US", { hour12:false }).split(":");
+                console.log(apiTime);
+                currentContainer.append("<p>" + "Local " + data.name + " Time: " + apiTime[0] + ":" + apiTime[1] + "</p>");
+                // p elements for temp, humidity, windspeed
+                var currentTemp = $("<p/>")
+                    .text("Temperature: " + data.main.temp + " °F ------ Feels like: " + data.main.feels_like + " °F");
+                    currentContainer.append(currentTemp);
+                var currentHum = $("<p/>")
+                    .text("Humidity: " + data.main.humidity + "%");
+                    currentContainer.append(currentHum);
+                var currentWind = $("<p/>")
+                    .text("Windspeed: " + data.wind.speed + " mpH");
+                    currentContainer.append(currentWind);
+
+                // UVI index API fetch
+                var apiUVI = "https://api.openweathermap.org/data/2.5/onecall?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&exclude=minutely,hourly,daily,alerts&appid=" + apiKey;
+
+                fetch(apiUVI)
+                .then (function (response){
+                    if(response.ok){
+                        response.json().then(function (data){
+                            console.log(data)
+                            var uvIndex = data.current.uvi;
+
+                            var uviContainer = $("<p/>")
+                            .text("UV Index: ");
+                            currentContainer.append(uviContainer);
+
+                            var currentUVI = $("<span/>")
+                            .text(uvIndex);
+                            uviContainer.append(currentUVI);
+
+                            // set UV index class for color coded scale
+                            if(uvIndex <= 2) {
+                                currentUVI.addClass("low");
+                            } else if(uvIndex <= 7) {
+                                currentUVI.addClass("mod");
+                            } else {
+                                currentUVI.addClass("high")
+                            };
+                        });
+                    }else {
+                        alert("Error: " + response.statusText);
+                    };
+                });
+
+
+
+
+            });
+    
+
+
+
+
+
+
+        }else {
+            alert("Error: " + response.statusText);
+        };
+    });
+};
+
+
+
 
 function renderSrcHistory() {
     histList.html("");
