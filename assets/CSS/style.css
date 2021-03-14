@@ -30,7 +30,7 @@ button,
 /* over-ride bootstrap defaults */
 .btn.btn-defaut:hover,
 .btn.btn-default:active,
-.btn.btn-default.active,
+.btn.btn-default:active,
 .btn.btn-default:focus,
 .btn.btn-default:hover {
     color: white !important;
@@ -38,6 +38,7 @@ button,
 }
 
 /* style for populated list from local storage */
-.li {
-    border-color: rgb(4, 68, 4);
+.list-group-item {
+    background-color: lightgrey;
+    list-style-type: none;
 }

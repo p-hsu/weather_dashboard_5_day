@@ -1,50 +1,50 @@
 // existing DOM elements to manipulate
-let currentContainer = $(".currentDay")
-let currentSpan = $(".currentSpan")
-let fiveContainer = $(".fiveDay")
-let fiveSpan = $("fiveSpan")
-let histContainer = $(".history")
-let srcBtn = $(".btn")
+var currentContainer = $(".currentDay")
+var fiveContainer = $(".fiveDay")
+var histList = $(".history")
+var srcBtn = $(".btnSrc")
+var clrBtn = $(".btnClr")
 
 // display date with moment.js
-let today = moment().format("dddd, MMMM Do YYYY");
+var today = moment().format("dddd, MMMM Do YYYY");
 $(".date").text("Today is " + today);
 
-// empty array to store items
-let storedCities = []
-// list search history
-for (let i = 0; i < localStorage.length; i++)
-    const oldCities = localStorage.getItem(i)
-    if (storedCities !== null || storedCities !== 0) {
-        //create li element add class "list-group-element"
-        const cityList = $("<li/>").addClass("list-group-element").text(oldCities)
-        historyBox.append("cityList")
-    };
+// .getItem variable for stored data
+var srcHistory = JSON.parse(localStorage.getItem("citiesSearched")) || [];
 
-// save search location
-// click event for search button
-srcBtn.click(function (e) {
-    e.preventDefault
-    let newCity = $(".userInput").val();
-    localStorage.setItem("storedCities", newCity)
-
-    let userCity = $(".userInput").val.trim();
-    if (userCity) {
-        getCurrentWeather(userCity);
-
-        currentSpan.textContent(userCity)
-        fiveSpan.textContent(userCity)
+// event listener for search btn
+srcBtn.click(function(e) {
+    e.preventDefault;
+    var newCity = $(".userInput").val();
+    if (newCity == "" || newCity == null) {
+        alert("No city to search!");
+        console.log("Empty input");
+    }else {
+        srcHistory.push(newCity);
+        // .setItem into data storage
+        localStorage.setItem("citiesSearched", JSON.stringify(srcHistory));
+        renderSrcHistory();
     };
 })
 
-//function for fetching current day weather
-//let getCurrentWeather = function (pull item) {
-    //let currentApiUrl = "url" + pullitem + "query";
-//}
-    //fetch(currentApiUrl)
-        //.then(function (response) {
-            //if(response.ok) {
-                //console.log(response);
-                //response.json()
-            //}
-        //})
+function renderSrcHistory() {
+    histList.html("");
+    if (srcHistory !== "" || srcHistory !== null) {
+        for (var i = 0; i < srcHistory.length; i++) {
+            // create and append list el with class
+            var histItem = $("<li/>")
+                .addClass("list-group-item")
+                .text(srcHistory[i]);
+            histList.append(histItem);
+        }
+    }else {
+        return;
+    };
+}
+
+clrBtn.click(function(e) {
+    e.preventDefault;
+    histList.html("");
+    localStorage.clear();
+    console.log("localStorage cleared");
+})
