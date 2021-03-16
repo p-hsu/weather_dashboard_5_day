@@ -67,7 +67,7 @@ The following lists all functions within the project:
 
 **Weather Dashboard Application**
 
-![Screenshot of Application:](./assets/images/weather_app.png)
+![Screenshot of Application:](/assets/Images/weather_app.png)
 
 
 ## Deployment
